@@ -1,6 +1,7 @@
 package so.dian.cmpp.controller;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +41,7 @@ public class SendMsmController {
 		try {
 			clientService.sendNotifySms(smsContext, billId);
 		} catch (Exception e) {
-			logger.error("发送消息失败,目标号码={}，消息内容={}",smsContext,billId);
+			logger.error("发送消息失败,目标号码={},消息内容={},异常信息={}",billId,smsContext,ExceptionUtils.getFullStackTrace(e));
 			return "";
 		}
 		return "";

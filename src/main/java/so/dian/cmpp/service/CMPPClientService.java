@@ -1,11 +1,9 @@
 package so.dian.cmpp.service;
 
-import java.io.IOException;
 import java.io.OutputStream;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,14 +52,9 @@ public class CMPPClientService {
 	 */
 	public String sendNotifySms(String msgContent, String receiveList) throws Exception {
 		String result = "";
-		try {
-			//链路检测正常，可以发送消息
-			if (CmppActiveTestThread.running) {
-				submitMessage(msgContent, receiveList);
-			}
-		} catch (IOException e) {
-			logger.error("发送短信异常!!!,异常信息={}", ExceptionUtils.getFullStackTrace(e));
-			result = "发送短信异常!!!";
+	     //链路检测正常，可以发送消息
+	    if (CmppActiveTestThread.running) {
+			submitMessage(msgContent, receiveList);
 		}
 		return result;
 	}

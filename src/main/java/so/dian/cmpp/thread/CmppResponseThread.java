@@ -3,6 +3,7 @@ package so.dian.cmpp.thread;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.InputStream;
+import java.net.SocketException;
 
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import so.dian.cmpp.bean.message.MsgRespThreadBean;
 import so.dian.cmpp.constant.CommandIdConstans;
 import so.dian.cmpp.service.CMPPClientService;
 import so.dian.cmpp.service.CMPPSocketService;
+import so.dian.cmpp.utils.CMPPUtils;
 import so.dian.cmpp.utils.ResultResolveUtlis;
 /**
  * 处理移动短信网关发来的消息线程
@@ -32,17 +34,29 @@ public class CmppResponseThread implements Runnable{
 	@Autowired
 	ResultResolveUtlis resultResolveUtlis;
 	
+	@Autowired
+	CMPPUtils cMPPUtils;
+	
 	public static boolean running=false;
+	private static int errorCount=0;
 
 	@Override
 	public void run() {
 		logger.info("------------------开始接收短信网关消息---------------");
 		while(running) {
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(1000);
 				CmppResponse();
 			} catch (Exception e) {
-			logger.error("接收响应消息异常,异常信息={}",ExceptionUtils.getFullStackTrace(e));
+			    logger.error("接收响应消息异常,异常信息={}",ExceptionUtils.getFullStackTrace(e));
+			    if(e instanceof SocketException) {
+			      	errorCount++;//如果出现大于5次socket 异常，就重新登录
+			      	 logger.error("接收响应消息异常,异常类型={},异常次数={}","SocketException",errorCount);
+			         if(errorCount>5) {
+			        	    cMPPUtils.retryException();
+						errorCount=0;
+					}
+			    }
 			}
 		}
 	}
