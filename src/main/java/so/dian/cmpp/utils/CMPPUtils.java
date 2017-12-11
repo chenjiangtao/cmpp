@@ -4,10 +4,12 @@ import org.apache.commons.lang.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import so.dian.cmpp.service.CMPPClientService;
 import so.dian.cmpp.service.CMPPSocketService;
 
+@Component
 public class CMPPUtils {
 	
 	
@@ -47,6 +49,16 @@ public class CMPPUtils {
 					logger.info("开始关闭原输出流");
 					cMPPSocketService.getOutputStream().close();
 			   }
+			  if(null!=cMPPSocketService.socket) {
+				  if(cMPPSocketService.socket.isClosed()) {
+					  logger.info("当前socket 已经关闭");
+					  cMPPSocketService.socket=null;
+				  }else {
+					  logger.info("当前socket通道 未关闭，关闭输入输出流 重新获取");
+					  cMPPSocketService.socket.shutdownInput();
+					  cMPPSocketService.socket.shutdownOutput();
+				  }
+			  }
 			  logger.info("开始重新连接移动网关");
 				cMPPClientService.login();
 		} catch (Exception e) {
