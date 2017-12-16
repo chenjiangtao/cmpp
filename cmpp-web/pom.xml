@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>so.dian.cmpp</groupId>
+    <artifactId>cmpp</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  
+  <groupId>so.dian.cmpp</groupId>
+  <artifactId>cmpp-web</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>cmpp-web</name>
+  <url>http://maven.apache.org</url>
+  <packaging>jar</packaging>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    
+     <dependency>
+			<groupId>so.dian.cmpp</groupId>
+			<artifactId>cmpp-service</artifactId>
+			 <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	 <dependency>
+			<groupId>so.dian.cmpp</groupId>
+			<artifactId>cmpp-dao</artifactId>
+			 <version>0.0.1-SNAPSHOT</version>
+	</dependency>
+	
+	<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.5.2</version>
+		</dependency>
+				<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+  </dependencies>
+  	<build>
+		<!-- <finalName>deviceFactory</finalName> -->
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>so.dian.cmpp.Application</mainClass>
+					<fork>true</fork>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<finalName>cmpp</finalName>
+	</build>
+</project>
