@@ -1,4 +1,4 @@
-# cmpp 3.0
+# cmpp 3.0 spring boot 1.5.8
 application-dev.properties 是项目启动的配置文件，填入自己公司的配置
 ```properties
 sms_gateway_ip= //移动短信网关ip
