@@ -6,13 +6,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class CMPPClientBean {
 
-    private String smsGatewayIp; // 服务端ip
-    private int smsGatewayReport; // 服务端口
-    private String businessUserName;// 鉴权账号
-    private String businessUserPwd;// 鉴权密码
-    private String spId;// 企业代码
-    private String businessCode;// 服务Id
-    private String smsAccessCodes;//短信接入码，显示到接收手机端的主叫号码
+    private String smsGatewayIp;        // 服务端ip
+    private int smsGatewayReport;       // 服务端口
+    private String businessUserName;    // 鉴权账号
+    private String businessUserPwd;     // 鉴权密码
+    private String spId;                // 企业代码
+    private String businessCode;        // 服务Id
+    private String smsAccessCodes;      // 短信接入码，显示到接收手机端的主叫号码
 
     public String getSmsAccessCodes() {
         return smsAccessCodes;
@@ -38,7 +38,7 @@ public class CMPPClientBean {
 
     @Value("${sms_gateway_report}")
     public void setSmsGatewayReport(int smsGatewayReport) {
-        this.smsGatewayReport = smsGatewayReport;
+        this.smsGatewayReport = Integer.valueOf(smsGatewayReport).intValue();
     }
 
     public String getBusinessUserName() {
