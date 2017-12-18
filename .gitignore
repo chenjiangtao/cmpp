@@ -9,4 +9,4 @@
 *.iws
 /*/target/
 /.metadata/
-application-dev.properties
+application-prod.properties
