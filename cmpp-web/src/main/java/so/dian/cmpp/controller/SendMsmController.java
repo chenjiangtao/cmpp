@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import so.dian.cmpp.annotation.MeidaRequestData;
-import so.dian.cmpp.bean.MessageSendSmsBean;
+import so.dian.cmpp.bean.SendMessageBean;
 import so.dian.cmpp.service.CMPPClientService;
 /**
  * 消息发送层，提供http接口
@@ -28,7 +28,7 @@ public class SendMsmController {
 	 * @return
 	 */
 	@RequestMapping(value = "/{version}/sendSms")
-	public String sendSms(@PathVariable String version,@MeidaRequestData MessageSendSmsBean bean) {
+	public String sendSms(@PathVariable String version,@MeidaRequestData SendMessageBean bean) {
 		String devId=bean.getDevId();
 		String billId=bean.getBillId();
 		if(StringUtils.isBlank(devId)) {
@@ -38,7 +38,7 @@ public class SendMsmController {
 			return "发送的目标号码不能为空";
 		}
 		try {
-			clientService.sendNotifySms(bean);
+			clientService.submitMessage(bean);
 		} catch (Exception e) {
 			logger.error("发送消息失败,目标号码={},设备编号={},异常信息={}",billId,bean.getDevId(),ExceptionUtils.getFullStackTrace(e));
 			return "";

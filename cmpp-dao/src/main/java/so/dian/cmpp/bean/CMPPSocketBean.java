@@ -4,10 +4,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 public class CMPPSocketBean {
-	private String ip;
-	private String report;
-	private OutputStream outputStream;
-	private InputStream inputStream;
+	private String ip;//短信网关ip
+	private String report;//短信网关端口
+	private OutputStream outputStream;//socket outputStream
+	private InputStream inputStream;//socket inputStream
 	
 	public String getIp() {
 		return ip;

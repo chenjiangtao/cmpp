@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import so.dian.cmpp.bean.CMPPClientBean;
-import so.dian.cmpp.bean.MessageSendSmsBean;
+import so.dian.cmpp.bean.SendMessageBean;
 import so.dian.cmpp.bean.message.MessageActiveBean;
 import so.dian.cmpp.bean.message.MessageBean;
 import so.dian.cmpp.bean.message.MessageDeliverRespBean;
@@ -40,28 +40,6 @@ public class CMPPClientService {
 	ByteUtils byteUtils;
 	
 	private static Logger logger = LoggerFactory.getLogger(CMPPClientService.class);
-
-	/**
-	 * 发送短信
-	 * 
-	 * @param servicenumber
-	 *            显示到接收手机端的主叫号码
-	 * @param msgContent
-	 *            发送的短信内容
-	 * @param receiveList
-	 *            接收短信的号码集合
-	 */
-	public String sendNotifySms(MessageSendSmsBean bean) throws Exception {
-		String result = "";
-	     //链路检测正常，可以发送消息
-	    if (CmppActiveTestThread.running) {
-	    	    //获取打开座充设备的消息报文
-	      //  String msgContent=messageUtils.getDeskTopOpenJson(bean,60L);
-	        bean.setMsgContext("TestId="+CMPPUtils.getTestId());
-			submitMessage(bean);
-		}
-		return result;
-	}
 
 	/**
 	 * 用户登录
@@ -108,20 +86,26 @@ public class CMPPClientService {
      * @param receiveList
      * @throws Exception
      */
-	public void submitMessage(MessageSendSmsBean sendSmsBean) throws Exception {
+	public void submitMessage(SendMessageBean sendSmsBean) throws Exception {
 		MessageSubmitBean bean = new MessageSubmitBean();
-		bean.setServiceId(cmppClientBean.getBusinessCode());//业务代码
-		bean.setMsgContent(sendSmsBean.getMsgContext());//消息内容
-		bean.setMsgSrc(cmppClientBean.getSpId());//企业编码
-		bean.setSrcId(cmppClientBean.getSmsAccessCodes());//短息接入码
-		bean.setCommandId(CommandIdConstans.CMPP_SUBMIT);//发送的消息类型
-		bean.setDestterminalId(sendSmsBean.getBillId());//发送的目标号码
-		bean.setSequenceId(CMPPUtils.getSequenceId());
-		//初始化cmpp_submit 消息包
-		MessageSubmitBean initMessageBean = MessageUtils.intoSubmit(bean);
-        byte[] bytes = messageUtils.toBytes(initMessageBean);
-        //将消息报文放入消息队列中
-		CmppSubmitMsgThread.queue.add(bytes);
+	     //链路检测正常，可以发送消息
+		 if (CmppActiveTestThread.running) {
+		    	    //获取打开座充设备的消息报文
+		      //String msgContent=messageUtils.getDeskTopOpenJson(bean,60L);
+		        bean.setMsgContent("TestId="+CMPPUtils.getTestId());
+		        bean.setServiceId(cmppClientBean.getBusinessCode());//业务代码
+				bean.setMsgContent(sendSmsBean.getMsgContext());//消息内容
+				bean.setMsgSrc(cmppClientBean.getSpId());//企业编码
+				bean.setSrcId(cmppClientBean.getSmsAccessCodes());//短息接入码
+				bean.setCommandId(CommandIdConstans.CMPP_SUBMIT);//发送的消息类型
+				bean.setDestterminalId(sendSmsBean.getBillId());//发送的目标号码
+				bean.setSequenceId(CMPPUtils.getSequenceId());
+				//初始化cmpp_submit 消息包
+				MessageSubmitBean initMessageBean = MessageUtils.intoSubmit(bean);
+		        byte[] bytes = messageUtils.toBytes(initMessageBean);
+		        //将消息报文放入消息队列中
+				CmppSubmitMsgThread.queue.add(bytes);
+		 }
 	}
 	 /**
      * 发送消息，该方法是登录和链路检测发送消息的入口

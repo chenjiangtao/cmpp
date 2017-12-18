@@ -1,5 +1,9 @@
 package so.dian.cmpp.constant;
-
+/**
+ * commandId 定义
+ * @author ningque
+ *
+ */
 public interface CommandIdConstans {
 
 	int CMPP_CONNECT	=0x00000001;//请求连接
@@ -10,12 +14,12 @@ public interface CommandIdConstans {
 	int CMPP_SUBMIT_RESP=	0x80000004;//提交短信应答
 	int CMPP_DELIVER	=0x00000005;//短信下发
 	int CMPP_DELIVER_RESP=	0x80000005;//下发短信应答
-	int CMPP_QUERY	=0x00000006;//发�?短信状�?查询
-	int CMPP_QUERY_RESP	=0x80000006;//发�?短信状�?查询应答
+	int CMPP_QUERY	=0x00000006;//发送短信状态查询
+	int CMPP_QUERY_RESP	=0x80000006;//发送短信状态查询应答
 	int CMPP_CANCEL	=	0x00000007;//删除短信
 	int CMPP_CANCEL_RESP=	0x80000007;//删除短信应答
-	int CMPP_ACTIVE_TEST	=0x00000008;//�?��测试
-	int CMPP_ACTIVE_TEST_RESP	=0x80000008;//�?��测试应答
+	int CMPP_ACTIVE_TEST	=0x00000008;//激活测试(链路检测)
+	int CMPP_ACTIVE_TEST_RESP	=0x80000008;//激活测试应答
 	int CMPP_FWD	=0x00000009;//消息前转
 	int CMPP_FWD_RESP=	0x80000009;//消息前转应答
 	int CMPP_MT_ROUTE	=0x00000010;

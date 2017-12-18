@@ -2,7 +2,6 @@ package so.dian.cmpp.utils;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -16,13 +15,12 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 
-import so.dian.cmpp.bean.MessageSendSmsBean;
+import so.dian.cmpp.bean.SendMessageBean;
 import so.dian.cmpp.bean.message.MessageBean;
 import so.dian.cmpp.bean.message.MessageConnectBean;
 import so.dian.cmpp.bean.message.MessageDeliverRespBean;
 import so.dian.cmpp.bean.message.MessageSubmitBean;
 import so.dian.cmpp.bean.message.MessageSubmitRepBean;
-import so.dian.cmpp.constant.CMPPConstants;
 import so.dian.cmpp.constant.CommandIdConstans;
 import so.dian.cmpp.constant.DeviceConstant;
 import so.dian.cmpp.thread.CmppActiveTestThread;
@@ -178,54 +176,6 @@ public class MessageUtils {
 		return connectMessage;
 	}
 
-	public static String getActiveConnResp(InputStream in) throws Exception {
-		DataInputStream dis = new DataInputStream(in);
-		int totalLength = dis.readInt();
-		byte statut = -1;
-		if (0 != totalLength) {
-			byte[] data = new byte[totalLength - 4];
-			dis.readFully(data);
-			InputStream ii = new ByteArrayInputStream(data);
-			DataInputStream diss = new DataInputStream(ii);
-			int commonId = diss.readInt();
-			int squeId = diss.readInt();
-			statut = diss.readByte();
-			logger.info("链路检测响应报文:totalLength={},commonId={},squeId={},statut={}", totalLength, commonId, squeId,
-					statut);
-		}
-		return String.valueOf(statut);
-	}
-
-	public String getConnResp(InputStream in) throws Exception {
-		new Thread(activeTestThread).start();
-		;
-		DataInputStream dis = new DataInputStream(in);
-		int totalLength = dis.readInt();
-		int statut = -1;
-		if (0 != totalLength) {
-			byte[] data = new byte[totalLength - 4];
-			dis.readFully(data);
-			InputStream ii = new ByteArrayInputStream(data);
-			DataInputStream diss = new DataInputStream(ii);
-			int commonId = byteUtils.readInt(diss);
-			int squeId = byteUtils.readInt(diss);
-			statut = byteUtils.readInt(diss);
-			int authenticatorISMG = byteUtils.readInt(diss);
-			int version = byteUtils.readInt(diss);
-			logger.info("连接socket响应报文:totalLength={},commonId={},squeId={},statut={},authenticatorISMG={},version={}",
-					totalLength, commonId, squeId, statut, authenticatorISMG, version);
-		}
-		if (CMPPConstants.status.status_0.equals(String.valueOf(statut))) {
-			logger.info("登录移动短信网关成功,staut={}", statut);
-			CmppActiveTestThread.running = true;
-			new Thread(activeTestThread).start();
-			CmppResponseThread.running = true;
-			new Thread(cmppResponseThread).start();
-		} else {
-			logger.info("登录移动短信网关失败,staut={}", statut);
-		}
-		return String.valueOf(statut);
-	}
 	/**
 	 * 初始化短信提交到网关信息
 	 * 
@@ -309,7 +259,7 @@ public class MessageUtils {
 	  * @return
 	  * @throws Exception
 	  */
-	 public String getBoxDeviceOpenJson(MessageSendSmsBean bean) {
+	 public String getBoxDeviceOpenJson(SendMessageBean bean) {
 	        Map<String, Object> ctx = new HashMap<>();
 	        ctx.put("protocol", DeviceConstant.MSG_DOWN);
 	        ctx.put("t", System.currentTimeMillis()/1000);
@@ -329,7 +279,7 @@ public class MessageUtils {
 	  * @return
 	  * @throws Exception
 	  */
-	 public String getDeskTopOpenJson(MessageSendSmsBean bean,Long duration) throws Exception {
+	 public String getDeskTopOpenJson(SendMessageBean bean,Long duration) throws Exception {
 	        logger.info(String.format("Device Open.DevID: %s, Duration: %d", bean.getDevId(), duration));
 	        Map<String, Object> ctx = new HashMap<>();
 	        ctx.put("protocol", DeviceConstant.MSG_DOWN);
@@ -344,5 +294,4 @@ public class MessageUtils {
 	        ctx.put("data", data);
 	        return gson.toJson(ctx);
 	   }
-
 }

@@ -1,6 +1,6 @@
 package so.dian.cmpp.bean;
 
-public class MessageSendSmsBean {
+public class SendMessageBean {
 	//设备Id、开关("1":true)、仓位("126":num)
 	//{"protocol":5,"t":1504540796,"data":{"devId":"b129ad7866873023044855","dps":{"1":true,"126":4}}}
 	private String devId;//设备编号
@@ -9,6 +9,7 @@ public class MessageSendSmsBean {
 	
 	private int squeId;//发送消息的sque编号
 	private String msgContext;//发送的消息内容
+	
 	private int soltId;
 	
 	public int getSoltId() {

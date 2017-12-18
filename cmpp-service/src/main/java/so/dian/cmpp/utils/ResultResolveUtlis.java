@@ -16,8 +16,8 @@ import so.dian.cmpp.bean.message.MessageDeliverBean;
 import so.dian.cmpp.bean.message.MessageDeliverReportBean;
 import so.dian.cmpp.bean.message.MessageSubmitRepBean;
 import so.dian.cmpp.bean.message.MsgRespThreadBean;
-import so.dian.cmpp.constant.CMPPConstants;
 import so.dian.cmpp.constant.CommandIdConstans;
+import so.dian.cmpp.constant.ErrorCodeConstants;
 import so.dian.cmpp.thread.CmppActiveTestThread;
 import so.dian.cmpp.thread.CmppSubmitMsgThread;
 
@@ -52,28 +52,28 @@ public class ResultResolveUtlis {
 		String result = "";
 		switch (status) {
 		case 0:
-			result = CMPPConstants.connect_staut_remark.connect_status_0;
+			result = ErrorCodeConstants.connect_staut_remark.connect_status_0;
 			break;
 		case 1:
-			result = CMPPConstants.connect_staut_remark.connect_status_1;
+			result = ErrorCodeConstants.connect_staut_remark.connect_status_1;
 			break;
 		case 2:
-			result = CMPPConstants.connect_staut_remark.connect_status_2;
+			result = ErrorCodeConstants.connect_staut_remark.connect_status_2;
 			break;
 		case 3:
-			result = CMPPConstants.connect_staut_remark.connect_status_3;
+			result = ErrorCodeConstants.connect_staut_remark.connect_status_3;
 			break;
 		case 4:
-			result = CMPPConstants.connect_staut_remark.connect_status_4;
+			result = ErrorCodeConstants.connect_staut_remark.connect_status_4;
 			break;
 		case 5:
-			result = CMPPConstants.connect_staut_remark.connect_status_5;
+			result = ErrorCodeConstants.connect_staut_remark.connect_status_5;
 			break;
 		case 160:
-			result = CMPPConstants.connect_staut_remark.connect_status_160;
+			result = ErrorCodeConstants.connect_staut_remark.connect_status_160;
 			break;
 		default:
-			result = CMPPConstants.connect_staut_remark.connect_status_5;
+			result = ErrorCodeConstants.connect_staut_remark.connect_status_5;
 			break;
 		}
 		return result;
@@ -90,46 +90,46 @@ public class ResultResolveUtlis {
 		String result = "";
 		switch (status) {
 		case 0:
-			result = CMPPConstants.submit_staut_remark.submit_status_0;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_0;
 			break;
 		case 1:
-			result = CMPPConstants.submit_staut_remark.submit_status_1;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_1;
 			break;
 		case 2:
-			result = CMPPConstants.submit_staut_remark.submit_status_2;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_2;
 			break;
 		case 3:
-			result = CMPPConstants.submit_staut_remark.submit_status_3;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_3;
 			break;
 		case 4:
-			result = CMPPConstants.submit_staut_remark.submit_status_4;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_4;
 			break;
 		case 5:
-			result = CMPPConstants.submit_staut_remark.submit_status_5;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_5;
 			break;
 		case 6:
-			result = CMPPConstants.submit_staut_remark.submit_status_6;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_6;
 			break;
 		case 7:
-			result = CMPPConstants.submit_staut_remark.submit_status_7;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_7;
 			break;
 		case 8:
-			result = CMPPConstants.submit_staut_remark.submit_status_8;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_8;
 			break;
 		case 9:
-			result = CMPPConstants.submit_staut_remark.submit_status_9;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_9;
 			break;
 		case 10:
-			result = CMPPConstants.submit_staut_remark.submit_status_10;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_10;
 			break;
 		case 11:
-			result = CMPPConstants.submit_staut_remark.submit_status_11;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_11;
 			break;
 		case 12:
-			result = CMPPConstants.submit_staut_remark.submit_status_12;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_12;
 			break;
 		case 13:
-			result = CMPPConstants.submit_staut_remark.submit_status_13;
+			result = ErrorCodeConstants.submit_staut_remark.submit_status_13;
 			break;
 		default:
 			result = "其他错误";
@@ -188,7 +188,7 @@ public class ResultResolveUtlis {
 		int commandId=respThreadBean.getCommandId();
 		int sequenceId=respThreadBean.getSequenceId();
 		logger.info("连接socket响应报文:totalLength={}, commonId={}, sequenceId={}, statut={}, authenticatorISMG={}, version={}",totalLength,commandId, sequenceId, statut, authenticatorISMG, version);
-		if (CMPPConstants.status.status_0.equals(String.valueOf(statut))) {
+		if (ErrorCodeConstants.status.status_0.equals(String.valueOf(statut))) {
 			logger.info("开始启动链路检测线程");
 			CmppActiveTestThread.running = true;
 			new Thread(activeTestThread).start();
