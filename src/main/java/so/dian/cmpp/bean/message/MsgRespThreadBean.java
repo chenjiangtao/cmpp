@@ -2,43 +2,42 @@ package so.dian.cmpp.bean.message;
 
 import java.io.DataInputStream;
 
-public class MsgRespThreadBean extends MessageBean{
-	
-	private DataInputStream dis;
-	
-	//cmpp_delvier
-	private Integer status;
-	private long msgId;
+public class MsgRespThreadBean extends MessageBean {
 
-	public DataInputStream getDis() {
-		return dis;
-	}
+    private DataInputStream dis;
+    //cmpp_delvier
+    private Integer status;
+    private long msgId;
 
-	public void setDis(DataInputStream dis) {
-		this.dis = dis;
-	}
+    public DataInputStream getDis() {
+        return dis;
+    }
 
-	public Integer getStatus() {
-		return status;
-	}
+    public void setDis(DataInputStream dis) {
+        this.dis = dis;
+    }
 
-	public void setStatus(Integer status) {
-		this.status = status;
-	}
+    public Integer getStatus() {
+        return status;
+    }
 
-	
-	public long getMsgId() {
-		return msgId;
-	}
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
-	public void setMsgId(long msgId) {
-		this.msgId = msgId;
-	}
 
-	@Override
-	public String toString() {
-		return "MsgRespThreadBean [dis=" + dis + ", status=" + status + ", msgId=" + msgId + ", toString()="
-				+ super.toString() + "]";
-	}
+    public long getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(long msgId) {
+        this.msgId = msgId;
+    }
+
+    @Override
+    public String toString() {
+        return "MsgRespThreadBean [dis=" + dis + ", status=" + status + ", msgId=" + msgId + ", toString()="
+                + super.toString() + "]";
+    }
 
 }

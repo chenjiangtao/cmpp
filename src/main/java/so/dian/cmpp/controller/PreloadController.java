@@ -1,12 +1,11 @@
 package so.dian.cmpp.controller;
 
-import java.io.IOException;
-
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Preload Controller
@@ -16,15 +15,15 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-public class PreloadController  {
+public class PreloadController {
 
     private static volatile boolean running = true;
 
     @RequestMapping("/preload")
     public String preload(HttpServletResponse response) throws IOException {
-        if (running){
+        if (running) {
             return "OK";
-        }else {
+        } else {
             response.sendError(404);
             return null;
         }
