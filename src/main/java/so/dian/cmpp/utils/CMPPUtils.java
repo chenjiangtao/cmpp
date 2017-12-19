@@ -14,9 +14,9 @@ public class CMPPUtils {
 
     public static int seq = 0;
     @Autowired
-    CMPPSocketService cMPPSocketService;
+    CMPPSocketService cmppSocketService;
     @Autowired
-    CMPPClientService cMPPClientService;
+    CMPPClientService cmppClientService;
 
     private static Logger logger = LoggerFactory.getLogger(CMPPUtils.class);
 
@@ -43,16 +43,16 @@ public class CMPPUtils {
         logger.error("SocketException 异常次数已大于5次,开始重新登录移动网关");
         try {
 
-            if (null != cMPPSocketService.getInputStream()) {
+            if (null != cmppSocketService.getInputStream()) {
                 logger.info("开始关闭原输入流");
-                cMPPSocketService.getInputStream().close();
+                cmppSocketService.getInputStream().close();
             }
-            if (null != cMPPSocketService.getOutputStream()) {
+            if (null != cmppSocketService.getOutputStream()) {
                 logger.info("开始关闭原输出流");
-                cMPPSocketService.getOutputStream().close();
+                cmppSocketService.getOutputStream().close();
             }
             logger.info("开始重新连接移动网关");
-            cMPPClientService.login();
+            cmppClientService.login();
         } catch (Exception e) {
             logger.error("重新连接移动网关失败,异常信息={}", ExceptionUtils.getFullStackTrace(e));
         }

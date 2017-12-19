@@ -14,9 +14,9 @@ import so.dian.cmpp.service.CMPPClientService;
  * @author ningque
  */
 @Component
-public class CmppActiveTestThread implements Runnable {
+public class CMPPActiveTestThread implements Runnable {
 
-    private static Logger logger = LoggerFactory.getLogger(CmppActiveTestThread.class);
+    private static Logger logger = LoggerFactory.getLogger(CMPPActiveTestThread.class);
 
     public static boolean running = false;
     @Autowired

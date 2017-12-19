@@ -17,8 +17,8 @@ import so.dian.cmpp.bean.message.MessageSubmitBean;
 import so.dian.cmpp.bean.message.MsgRespThreadBean;
 import so.dian.cmpp.constant.CMPPConstants;
 import so.dian.cmpp.constant.CommandIdConstans;
-import so.dian.cmpp.thread.CmppActiveTestThread;
-import so.dian.cmpp.thread.CmppResponseThread;
+import so.dian.cmpp.thread.CMPPActiveTestThread;
+import so.dian.cmpp.thread.CMPPResponseThread;
 import so.dian.cmpp.utils.ByteUtils;
 import so.dian.cmpp.utils.CMPPUtils;
 import so.dian.cmpp.utils.MessageUtils;
@@ -33,7 +33,7 @@ public class CMPPClientService {
     @Autowired
     MessageUtils messageUtils;
     @Autowired
-    CmppResponseThread cmppResponseThread;
+    CMPPResponseThread cmppResponseThread;
     @Autowired
     ByteUtils byteUtils;
 
@@ -50,7 +50,7 @@ public class CMPPClientService {
     public String sendNotifySms(String msgContent, String receiveList) throws Exception {
         String result = "";
         //链路检测正常，可以发送消息
-        if (CmppActiveTestThread.running) {
+        if (CMPPActiveTestThread.running) {
             submitMessage(msgContent, receiveList);
         }
         return result;
@@ -78,7 +78,7 @@ public class CMPPClientService {
         // 获取登录状态 0为登录成功
         sendMessage(connectMessage);
         logger.info("开始启动接收短信线程");
-        CmppResponseThread.running = true;
+        CMPPResponseThread.running = true;
         new Thread(cmppResponseThread).start();//启动接收短信线程
     }
 

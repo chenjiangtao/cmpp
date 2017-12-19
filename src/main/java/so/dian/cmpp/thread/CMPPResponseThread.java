@@ -24,16 +24,16 @@ import java.net.SocketException;
  * @author ningque
  */
 @Component
-public class CmppResponseThread implements Runnable {
-    private static Logger logger = LoggerFactory.getLogger(CmppResponseThread.class);
+public class CMPPResponseThread implements Runnable {
+    private static Logger logger = LoggerFactory.getLogger(CMPPResponseThread.class);
     @Autowired
-    CMPPSocketService cMPPSocketService;
+    CMPPSocketService cmppSocketService;
     @Autowired
-    CMPPClientService cMPPClientService;
+    CMPPClientService cmppClientService;
     @Autowired
     ResultResolveUtlis resultResolveUtlis;
     @Autowired
-    CMPPUtils cMPPUtils;
+    CMPPUtils cmppUtils;
 
     public static boolean running = false;
     private static int errorCount = 0;
@@ -51,7 +51,7 @@ public class CmppResponseThread implements Runnable {
                     errorCount++;//如果出现大于5次socket 异常，就重新登录
                     logger.error("接收响应消息异常,异常类型={},异常次数={}", "SocketException", errorCount);
                     if (errorCount > 5) {
-                        cMPPUtils.retryException();
+                        cmppUtils.retryException();
                         errorCount = 0;
                     }
                 }
@@ -60,7 +60,7 @@ public class CmppResponseThread implements Runnable {
     }
 
     public void CmppResponse() throws Exception {
-        InputStream in = cMPPSocketService.getInputStream();
+        InputStream in = cmppSocketService.getInputStream();
         DataInputStream dis = new DataInputStream(in);
         int totalLength = dis.readInt();
         if (0 == totalLength) {
@@ -108,7 +108,7 @@ public class CmppResponseThread implements Runnable {
                 }
                 logger.info(deliverBuffer.toString());
                 //发送给移动短息网关响应
-                cMPPClientService.cmppDdeliverResp(respThreadBean);
+                cmppClientService.cmppDdeliverResp(respThreadBean);
                 break;
             default:
                 logger.error("其他类型不予处理,commonId=", commandId);

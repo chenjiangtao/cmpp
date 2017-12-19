@@ -19,8 +19,8 @@ import so.dian.cmpp.bean.message.MessageSubmitBean;
 import so.dian.cmpp.bean.message.MessageSubmitRepBean;
 import so.dian.cmpp.constant.CMPPConstants;
 import so.dian.cmpp.constant.CommandIdConstans;
-import so.dian.cmpp.thread.CmppActiveTestThread;
-import so.dian.cmpp.thread.CmppResponseThread;
+import so.dian.cmpp.thread.CMPPActiveTestThread;
+import so.dian.cmpp.thread.CMPPResponseThread;
 
 /**
  * 将消息对象 根据 cmpp协议 转为移动网关的消息包
@@ -33,9 +33,9 @@ public class MessageUtils {
     private static Logger logger = LoggerFactory.getLogger(MessageUtils.class);
 
     @Autowired
-    CmppActiveTestThread activeTestThread;
+    CMPPActiveTestThread activeTestThread;
     @Autowired
-    CmppResponseThread cmppResponseThread;
+    CMPPResponseThread cmppResponseThread;
     @Autowired
     ByteUtils byteUtils;
 
@@ -209,13 +209,13 @@ public class MessageUtils {
         }
         if (CMPPConstants.status.status_0.equals(String.valueOf(statut))) {
             logger.info("登录移动短信网关成功,staut={}", statut);
-            CmppActiveTestThread.running = true;
+            CMPPActiveTestThread.running = true;
             new Thread(activeTestThread).start();
-            CmppResponseThread.running = true;
+            CMPPResponseThread.running = true;
             new Thread(cmppResponseThread).start();
         } else {
             logger.info("登录移动短信网关失败,staut={}", statut);
-            CmppActiveTestThread.running = false;
+            CMPPActiveTestThread.running = false;
         }
         return String.valueOf(statut);
     }

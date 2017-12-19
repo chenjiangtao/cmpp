@@ -18,7 +18,7 @@ import so.dian.cmpp.bean.message.MessageSubmitRepBean;
 import so.dian.cmpp.bean.message.MsgRespThreadBean;
 import so.dian.cmpp.constant.CMPPConstants;
 import so.dian.cmpp.constant.CommandIdConstans;
-import so.dian.cmpp.thread.CmppActiveTestThread;
+import so.dian.cmpp.thread.CMPPActiveTestThread;
 
 /**
  * 对返回的结果进行处理
@@ -31,7 +31,7 @@ public class ResultResolveUtlis {
     private static Logger logger = LoggerFactory.getLogger(ResultResolveUtlis.class);
 
     @Autowired
-    CmppActiveTestThread activeTestThread;
+    CMPPActiveTestThread activeTestThread;
 
     @Autowired
     ByteUtils byteUtils;
@@ -182,10 +182,10 @@ public class ResultResolveUtlis {
         logger.info("连接socket响应报文:totalLength={}, commonId={}, squeId={}, statut={}, authenticatorISMG={}, version={}", totalLength, commandId, sequenceId, statut, authenticatorISMG, version);
         if (CMPPConstants.status.status_0.equals(String.valueOf(statut))) {
             logger.info("开始启动链路检测线程");
-            CmppActiveTestThread.running = true;
+            CMPPActiveTestThread.running = true;
             new Thread(activeTestThread).start();
         } else {
-            CmppActiveTestThread.running = false;
+            CMPPActiveTestThread.running = false;
         }
         MessageConnectRespBean connRepBean = new MessageConnectRespBean();
         connRepBean.setTotalLength(totalLength);
